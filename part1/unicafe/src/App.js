@@ -4,7 +4,13 @@ const Header = prop => <h1>{prop.text}</h1>
 
 const Statistics = (prop) => {
   const stat = [0 ,0 ,0]
-  if (prop.good + prop.bad + prop.neutral === 0){}
+  if (prop.good + prop.bad + prop.neutral === 0){
+    return (
+    <>
+    <h1>No Feedback available</h1>
+    </>
+    )
+  }
   else {
     stat[0] = (prop.good*1 + prop.bad*-1)/(prop.good + prop.bad + prop.neutral)
     stat[1] = ((prop.good/(prop.good + prop.bad + prop.neutral))*100)

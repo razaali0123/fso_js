@@ -2,43 +2,47 @@ import React, { useState } from 'react'
 
 const Header = prop => <h1>{prop.text}</h1>
 
+const StatisticLine = prop => {
+  if (prop.text === "good"){
+    return <p>good {prop.value}</p>
+  }
+  if (prop.text === "neutral"){
+    return <p>neutral {prop.value}</p>
+  } 
+  if (prop.text === "bad"){
+    return <p> bad {prop.value}</p>
+  }
+  if (prop.text === "all"){
+    return <p> all {prop.value}</p>
+  }
+  if (prop.text === "average"){
+    if (prop.all === 0){return <p> average 0</p>}
+    return <p> average {(prop.value/prop.all)}</p>
+  }
+
+  if (prop.text === "posPercentage"){
+    if (prop.all === 0){return<p>  posPercentage 0 %</p>}
+    return <p> posPercentage {(prop.pos/prop.all)*100} %</p>
+  }
+
+}
+
 const Statistics = (prop) => {
-  const stat = [0 ,0 ,0]
-  if (prop.good + prop.bad + prop.neutral === 0){
-    return (
-    <>
-    <h1>No Feedback available</h1>
-    </>
-    )
-  }
-  else {
-    stat[0] = (prop.good*1 + prop.bad*-1)/(prop.good + prop.bad + prop.neutral)
-    stat[1] = ((prop.good/(prop.good + prop.bad + prop.neutral))*100)
-    stat[2] = (prop.good + prop.bad + prop.neutral)
-  }
-  return (
-    <>
-    <p>Average: {stat[0]}</p>
-    <p>posPercentage: {stat[1]}</p>
-    <p>all: {stat[2]}</p>
-    </>
+  return(
+    <div>
+      <StatisticLine text="good" value = {prop.good} />
+      <StatisticLine text="neutral" value ={prop.neutral} />
+      <StatisticLine text="bad" value ={prop.bad} />
+      <StatisticLine text="all" value ={prop.bad + prop.good + prop.neutral} />
+      <StatisticLine text="average" all ={prop.bad + prop.good + prop.neutral} value = {prop.bad*-1 + prop.good*1} />
+      <StatisticLine text="posPercentage" all ={prop.bad + prop.good + prop.neutral} pos = {prop.good} />
+    </div>
   )
 }
 
-// const Statistics = (prop) => {
-//   const stat = {}
-//   if (prop.good + prop.bad + prop.neutral === 0){
-//     stat['avg'] = 0
-//     stat['posPercentage'] = 0
-//     stat['All'] = 0
-//   }
-//   else {
-//     stat['avg'] = (prop.good*1 + prop.bad*-1)/(prop.good + prop.bad + prop.neutral)
-//     stat['posPercentage'] = ((prop.good/(prop.good + prop.bad + prop.neutral))*100)
-//     stat['All'] = (prop.good + prop.bad + prop.neutral)
-//   }
-//   return stat
-// }
+const Button = (prop) => {
+  return <button onClick = {prop.func}>{prop.text} </button>
+}
 
 
 const App = () => {
@@ -64,13 +68,10 @@ const App = () => {
   return (
     <div>
       <Header text = 'Give Feedback'/>
-      <button onClick = {handlebuttonGood}>good </button>
-      <button onClick = {handlebuttonNeutral}>Neutral </button>
-      <button onClick = {handlebuttonBad}>Bad </button>
-      <p>good: {good}</p>
-      <p>neutral: {neutral}</p>
-      <p>bad: {bad}</p>
-      <Statistics good = {good} neutral = {neutral} bad = {bad} />
+      <Button text = "good" func = {handlebuttonGood} />
+      <Button text = "Neutral" func = {handlebuttonNeutral} />
+      <Button text = "Bad" func = {handlebuttonBad} />
+      <Statistics good = {good} bad = {bad} neutral = {neutral} />
     </div>
   )
 }

@@ -4,25 +4,25 @@ const Header = prop => <h1>{prop.text}</h1>
 
 const StatisticLine = prop => {
   if (prop.text === "good"){
-    return <p>good {prop.value}</p>
+    return <td>good {prop.value}</td>
   }
   if (prop.text === "neutral"){
-    return <p>neutral {prop.value}</p>
+    return <td>neutral {prop.value}</td>
   } 
   if (prop.text === "bad"){
-    return <p> bad {prop.value}</p>
+    return <td> bad {prop.value}</td>
   }
   if (prop.text === "all"){
-    return <p> all {prop.value}</p>
+    return <td> all {prop.value}</td>
   }
   if (prop.text === "average"){
-    if (prop.all === 0){return <p> average 0</p>}
-    return <p> average {(prop.value/prop.all)}</p>
+    if (prop.all === 0){return <td> average 0</td>}
+    return <td> average {(prop.value/prop.all)}</td>
   }
 
   if (prop.text === "posPercentage"){
-    if (prop.all === 0){return<p>  posPercentage 0 %</p>}
-    return <p> posPercentage {(prop.pos/prop.all)*100} %</p>
+    if (prop.all === 0){return <td>  posPercentage 0 %</td>}
+    return <td> posPercentage {(prop.pos/prop.all)*100} %</td>
   }
 
 }
@@ -30,12 +30,16 @@ const StatisticLine = prop => {
 const Statistics = (prop) => {
   return(
     <div>
-      <StatisticLine text="good" value = {prop.good} />
-      <StatisticLine text="neutral" value ={prop.neutral} />
-      <StatisticLine text="bad" value ={prop.bad} />
-      <StatisticLine text="all" value ={prop.bad + prop.good + prop.neutral} />
-      <StatisticLine text="average" all ={prop.bad + prop.good + prop.neutral} value = {prop.bad*-1 + prop.good*1} />
-      <StatisticLine text="posPercentage" all ={prop.bad + prop.good + prop.neutral} pos = {prop.good} />
+      <table>
+      <tbody>
+      <tr><StatisticLine text="good" value = {prop.good} /></tr>
+      <tr><StatisticLine text="neutral" value ={prop.neutral} /></tr>
+      <tr><StatisticLine text="bad" value ={prop.bad} /></tr>
+      <tr><StatisticLine text="all" value ={prop.bad + prop.good + prop.neutral} /></tr>
+      <tr><StatisticLine text="average" all ={prop.bad + prop.good + prop.neutral} value = {prop.bad*-1 + prop.good*1} /></tr>
+      <tr><StatisticLine text="posPercentage" all ={prop.bad + prop.good + prop.neutral} pos = {prop.good} /></tr>
+      </tbody>
+      </table>
     </div>
   )
 }

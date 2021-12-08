@@ -15,7 +15,7 @@ return <h1>{prop.headline}</h1>
 }
 
 const Content = (prop) =>{
-return (prop.lst.map(x => <Part key = {x.id} partname = {x}/>))
+return (prop.lst.map(x =><Part key = {x.id} partname = {x}/>))
 }
 
 const Part = (prop) =>{
@@ -45,8 +45,18 @@ function App() {
       }
     ]
   }
+  let total = 0
+  for (let i = 0; i<course.parts.length; i++)
+  {
+    total += course.parts[i].exercises
+  }
 
-  return <Course course={course} />
+  return (
+  <>
+  <Course course={course} />
+    <p>Total: {total}</p>
+    </>
+    )
 }
 
 export default App;

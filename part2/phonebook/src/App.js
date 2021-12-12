@@ -7,6 +7,7 @@ const App = () => {
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setnewNumber] = useState(0)
+  const [filterName, setFilterName] = useState(persons)
 
   const onChanger = (event) => {
     setNewName(event.target.value)
@@ -14,6 +15,12 @@ const App = () => {
 
   const onChangerNumber = (event) =>{
     setnewNumber(event.target.value)
+  }
+
+  const filerName = (event) =>{
+    const regex = new RegExp('^'.concat(event.target.value))
+    const filtered = persons.filter(x => regex.test(x.name.toLowerCase()))
+    setFilterName(filtered)
   }
 
   const addNameNum = (event)=> {
@@ -27,11 +34,17 @@ const App = () => {
     setPersons(persons.concat(personObj))
     setNewName('')
     setnewNumber(0)
+    setFilterName(persons.concat(personObj))
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <h3>Filter Elements here</h3>
+      <div>
+        filter shown with <input onChange={filerName} />
+      </div>
+      <h3>Add New One Here</h3>
       <form  onSubmit={addNameNum}>
       <div>
           name: <input value={newName} onChange={onChanger}  /><br></br>
@@ -44,7 +57,7 @@ const App = () => {
       <h2>Numbers</h2>
       <div>
           <ul>
-          {persons.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
+            {filterName.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
            </ul>
         </div>
 

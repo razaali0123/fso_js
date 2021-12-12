@@ -8,12 +8,19 @@ const App = () => {
   const [newName, setNewName] = useState('')
 
   const onChanger = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const addName = (event)=> {
     event.preventDefault()
+    const allNames =  persons.map(x => x.name)
+    if (allNames.includes(newName)){
+      window.alert(`${newName} already exists`)
+      return
+    }
+    // if allNames.includes(newName){
+
+    // }
     const personObj = {name: newName}
     setPersons(persons.concat(personObj))
     setNewName('')

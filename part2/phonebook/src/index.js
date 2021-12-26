@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+
+// const promise = axios.get('http://localhost:3001/notes')
+// promise.then(response => {
+//   console.log(response)
+// })
+
+// const promise2 = axios.get('http://localhost:3001/foobar')
+// console.log(promise2)
+
+ReactDOM.render(<App />, document.getElementById('root'))
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

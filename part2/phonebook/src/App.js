@@ -1,89 +1,20 @@
-import React, {useState} from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 
-const Filter = ({filerName})=> {
-  return (
-    <div>
-    filter shown with <input onChange={filerName} />
-  </div>
-  )
-}
 
-const Form = ({newName,onChanger,newNumber,onChangerNumber,addNameNum}) => {
-  return (
-    <form  onSubmit={addNameNum}>
-    <div>
-        name: <input value={newName} onChange={onChanger}  /><br></br>
-        number: <input value={newNumber} onChange={onChangerNumber}  />
-      </div>
-      <div>
-        <button type="submit" >add</button>
-      </div>
-    </form>
-  )
-
-}
-
-const Show = ({filterName}) => {
-  return(
-    <div>
-    <ul>
-      {filterName.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
-     </ul>
-  </div>
-  )
-}
 
 
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number:+923326029209}
-  ]) 
-  const [newName, setNewName] = useState('')
-  const [newNumber, setnewNumber] = useState(0)
-  const [filterName, setFilterName] = useState(persons)
-
-  const onChanger = (event) => {
-    setNewName(event.target.value)
+  const [person, setPerson] = useState([])
+  const hook = ()=> {
+    axios.get("http://localhost:3001/persons").then(resposes => setPerson(resposes.data))
   }
+  useEffect(hook, [])
+  return null
 
-  const onChangerNumber = (event) =>{
-    setnewNumber(event.target.value)
-  }
-
-  const filerName = (event) =>{
-    const regex = new RegExp('^'.concat(event.target.value))
-    const filtered = persons.filter(x => regex.test(x.name.toLowerCase()))
-    setFilterName(filtered)
-  }
-
-  const addNameNum = (event)=> {
-    event.preventDefault()
-    const allNames =  persons.map(x => x.name)
-    if (allNames.includes(newName)){
-      window.alert(`${newName} already exists`)
-      return
-    }
-    const personObj = {name: newName, number: newNumber}
-    setPersons(persons.concat(personObj))
-    setNewName('')
-    setnewNumber(0)
-    setFilterName(persons.concat(personObj))
-  }
-
-  return (
-    <div>
-      <h2>Phonebook</h2>
-      <h3>Filter Elements here</h3>
-      <Filter filerName = {filerName}/>
-      <h3>Add New One Here</h3>
-      <Form newName = {newName} onChanger = {onChanger} newNumber = {newNumber} onChangerNumber = {onChangerNumber} addNameNum = {addNameNum} />
-      <h2>Numbers</h2>
-      <Show filterName = {filterName} />
-    </div>
-  )
 }
 
 export default App;
